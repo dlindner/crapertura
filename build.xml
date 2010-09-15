@@ -1,0 +1,52 @@
+<project name="crapertura" default="all" basedir=".">
+	
+	<target name="-init">
+		<property name="target.directory" location="${basedir}/target"/>
+		<property name="distribution.directory" location="${basedir}/dist"/>
+		<property name="source.directory" location="${basedir}/src"/>
+		<property name="library.directory" location="${basedir}/lib"/>
+		
+		<fileset id="libraries" dir="${library.directory}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</target>
+	
+	<target name="all" depends="clean,compile,package">
+		<echo message="Everything finished nicely."/>
+	</target>
+	
+	<target name="clean" depends="-init">
+		<delete dir="${target.directory}" failonerror="false"/>
+		<mkdir dir="${target.directory}"/>
+	</target>
+		
+	<target name="compile" depends="-init">
+		<javac
+			source="1.6"
+			debug="true"
+			encoding="iso-8859-1"
+			srcdir="${source.directory}"
+			destdir="${target.directory}"
+		>
+			<classpath>
+				<fileset refid="libraries"/>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="package" depends="-init">
+		<delete dir="${distribution.directory}" failonerror="false"/>
+		<mkdir dir="${distribution.directory}"/>
+		
+		<copy todir="${distribution.directory}" flatten="true">
+			<fileset refid="libraries"/>
+		</copy>
+		
+		<jar destfile="${distribution.directory}/crapertura.jar">
+			<fileset dir="${target.directory}">
+				<include name="**/*"/>
+			</fileset>
+		</jar>
+	</target>
+
+</project>
