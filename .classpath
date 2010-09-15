@@ -2,10 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="lib/ant-1.8.1.jar"/>
-	<classpathentry kind="lib" path="lib/commons-math-2.1.jar"/>
-	<classpathentry kind="lib" path="lib/crap4j-1.1.5/asmlib.jar"/>
-	<classpathentry kind="lib" path="lib/crap4j-1.1.5/org.crap4j-1.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/compile/ant-1.8.1.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/crap4j-1.1.5/asmlib.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/crap4j-1.1.5/org.crap4j-1.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/commons-math-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/dom4j-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

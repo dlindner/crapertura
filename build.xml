@@ -6,7 +6,10 @@
 		<property name="source.directory" location="${basedir}/src"/>
 		<property name="library.directory" location="${basedir}/lib"/>
 		
-		<fileset id="libraries" dir="${library.directory}">
+		<fileset id="compiletime-libraries" dir="${library.directory}/compile">
+			<include name="**/*.jar"/>
+		</fileset>
+		<fileset id="runtime-libraries" dir="${library.directory}/runtime">
 			<include name="**/*.jar"/>
 		</fileset>
 	</target>
@@ -29,7 +32,8 @@
 			destdir="${target.directory}"
 		>
 			<classpath>
-				<fileset refid="libraries"/>
+				<fileset refid="compiletime-libraries"/>
+				<fileset refid="runtime-libraries"/>
 			</classpath>
 		</javac>
 	</target>
@@ -39,7 +43,7 @@
 		<mkdir dir="${distribution.directory}"/>
 		
 		<copy todir="${distribution.directory}" flatten="true">
-			<fileset refid="libraries"/>
+			<fileset refid="runtime-libraries"/>
 		</copy>
 		
 		<jar destfile="${distribution.directory}/crapertura.jar">
