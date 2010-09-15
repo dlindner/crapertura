@@ -12,10 +12,10 @@ public class MethodCoverage {
 	}
 
 	public double getLineCoverageRate() {
-		return lineCoverageRate;
+		return this.lineCoverageRate;
 	}
 
 	public double getBranchCoverageRate() {
-		return branchCoverageRate;
+		return this.branchCoverageRate;
 	}
 }

@@ -57,9 +57,9 @@ public class MethodCrapData {
 	public double getCoverage() {
 		return this.coverage;
 	}
-	
+
 	public int getCrapThreshold() {
-		return crapThreshold;
+		return this.crapThreshold;
 	}
 
 	protected double adjustBranchCoverage(double lineCoverage, double branchCoverage) {
@@ -69,16 +69,16 @@ public class MethodCrapData {
 		return (branchCoverage * lineCoverage);
 	}
 
-    public int calculateCrapLoad(double crap, int complexity, double coverage, double crapThreshold) {
+    public static int calculateCrapLoad(double crap, int complexity, double coverage, double crapThreshold) {
         int crapLoad = 0;
         if (crap >= crapThreshold) {
-            crapLoad = (int) ((double) crapLoad + (double) complexity * (1.0D - coverage));
-            crapLoad = (int) ((float) crapLoad + (float) complexity / crapThreshold);
+            crapLoad = (int) (crapLoad + complexity * (1.0D - coverage));
+            crapLoad = (int) (crapLoad + complexity / crapThreshold);
         }
         return crapLoad;
     }
 
-	protected double calculateCrap(double complexity, double coverage) {
+	protected static double calculateCrap(double complexity, double coverage) {
 		return (float) (complexity * (complexity * Math.pow(1.0D - coverage, 3D)) + complexity);
 	}
 }

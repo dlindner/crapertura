@@ -6,9 +6,10 @@ import org.apache.tools.ant.Project;
 
 import com.schneide.crapertura.ant.CraperturaTask;
 
+@SuppressWarnings("nls")
 public class Main {
 
-	public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
 		CraperturaTask task = new CraperturaTask();
 		task.setCoberturaReportFile(new File("C:/Dokumente und Einstellungen/dsl/Desktop/ramses-center-coverage.xml"));
 		task.setClassesDirectory(new File("C:/Dokumente und Einstellungen/dsl/Desktop/report-classes/report-classes"));

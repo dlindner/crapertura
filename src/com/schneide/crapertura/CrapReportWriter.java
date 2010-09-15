@@ -12,6 +12,7 @@ import org.dom4j.io.XMLWriter;
 import com.schneide.crapertura.statistics.CrapStatistics;
 import com.schneide.crapertura.statistics.MethodCrapData;
 
+@SuppressWarnings("nls")
 public class CrapReportWriter {
 
 	public CrapReportWriter() {
@@ -26,7 +27,7 @@ public class CrapReportWriter {
 		writer.flush();
 	}
 
-	protected Document createReportDocument(Iterable<MethodCrapData> data) {
+    protected Document createReportDocument(Iterable<MethodCrapData> data) {
 		Document document = DocumentFactory.getInstance().createDocument();
 		Element rootElement = document.addElement("crap_result");
 		rootElement.addElement("project").addText("TODO");
@@ -64,6 +65,7 @@ public class CrapReportWriter {
 	}
 
 	protected void addHistogram(Element histogramElement) {
+	    // TODO: Calculate real histogram
 		HistogramBar[] bars = new HistogramBar[] {
 			new HistogramBar("one", 1987, 28.0d),
 			new HistogramBar("two", 12606, 170.0d),
@@ -79,7 +81,7 @@ public class CrapReportWriter {
 			histogramBar.appendToElement(histogramElement);
 		}
 	}
-	
+
 	protected void addNumberElement(Element root, String elementName, double value) {
 		root.addElement(elementName).addText(String.valueOf(value));
 	}
@@ -108,25 +110,6 @@ public class CrapReportWriter {
 		addNumberElement(statsElement, "globalCraploadAverageDiff", statistics.getGlobalCraploadAverageDiff());
 		addNumberElement(statsElement, "globalCrapMethodAverageDiff", statistics.getGlobalCrapMethodAverageDiff());
 		addNumberElement(statsElement, "globalTotalMethodAverageDiff", statistics.getGlobalTotalMethodAverageDiff());
-
-//		statsElement.addElement("totalCrap").addText("49517.77");
-//		statsElement.addElement("crap").addText("2.94");
-//		statsElement.addElement("median").addText("2.00");
-//		statsElement.addElement("average").addText("2.94");
-//		statsElement.addElement("stdDev").addText("4.90");
-//		statsElement.addElement("methodCount").addText("16837");
-//		statsElement.addElement("crapMethodCount").addText("95");
-//		statsElement.addElement("crapMethodPercent").addText("0.56");
-//		statsElement.addElement("crapLoad").addText("574");
-//		statsElement.addElement("crapThreshold").addText("30");
-//		statsElement.addElement("globalAverage").addText("-1.00");
-//		statsElement.addElement("globalCraploadAverage").addText("-1.00");
-//		statsElement.addElement("globalCrapMethodAverage").addText("-1.00");
-//		statsElement.addElement("globalTotalMethodAverage").addText("-1.00");
-//		statsElement.addElement("globalAverageDiff").addText("3.94");
-//		statsElement.addElement("globalCraploadAverageDiff").addText("575.00");
-//		statsElement.addElement("globalCrapMethodAverageDiff").addText("96.00");
-//		statsElement.addElement("globalTotalMethodAverageDiff").addText("16838.00");
 		statsElement.addElement("shareStatsUrl").addText("http://www.crap4j.org/benchmark/stats/new?stat[project_hash]=1223208041985&amp;stat[project_url]=ci&amp;stat[crap]=0.56&amp;stat[crap_load]=574&amp;stat[crap_methods]=95&amp;stat[total_methods]=16837&amp;stat[ones]=1987&amp;stat[twos]=12606&amp;stat[fours]=1502&amp;stat[eights]=500&amp;stat[sixteens]=200&amp;stat[thirtytwos]=27&amp;stat[sixtyfours]=12&amp;stat[one28s]=2&amp;stat[two56s]=1");
 		addHistogram(statsElement.addElement("histogram"));
 	}

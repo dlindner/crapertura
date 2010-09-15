@@ -16,19 +16,20 @@ import com.schneide.crapertura.coverage.report.CoberturaXMLReportReader;
 import com.schneide.crapertura.coverage.report.MethodCoverage;
 import com.schneide.crapertura.statistics.MethodCrapData;
 
+@SuppressWarnings("nls")
 public class CraperturaTask extends Task {
-	
+
 	private File coberturaReportFile;
 	private File targetFile;
 	private File classesDirectory;
 	private int crapThreshold;
-	
+
 	public CraperturaTask() {
 		super();
 		this.crapThreshold = 30;
 	}
-	
-	@Override
+
+    @Override
 	public void execute() throws BuildException {
 		failIfAbsent(this.coberturaReportFile, "coberturaReportFile");
 		failIfAbsent(this.targetFile, "targetFile");
@@ -39,7 +40,7 @@ public class CraperturaTask extends Task {
 			throw new BuildException(e);
 		}
 	}
-	
+
 	protected void executeChecked() throws Exception {
 		CoberturaXMLReportReader reader = new CoberturaXMLReportReader();
 		Map<String, MethodCoverage> map = reader.readXMLReport(this.coberturaReportFile);
@@ -59,30 +60,30 @@ public class CraperturaTask extends Task {
 				this.targetFile,
 				crapData);
 	}
-	
+
 	protected MethodCrapData handleMethodWithBothData(MethodComplexity complexity, MethodCoverage coverage) {
 		return new MethodCrapData(complexity, coverage, this.crapThreshold);
 	}
-	
-	protected void failIfAbsent(Object instance, String description) {
+
+	protected void failIfAbsent(Object instance, String parameterName) {
 		if (null != instance) {
 			return;
 		}
-		throw new BuildException("Required parameter " + description + " missing.");
+		throw new BuildException("Required parameter " + parameterName + " missing.");
 	}
-	
+
 	public void setCoberturaReportFile(File coberturaReportFile) {
 		this.coberturaReportFile = coberturaReportFile;
 	}
-	
+
 	public void setTargetFile(File targetFile) {
 		this.targetFile = targetFile;
 	}
-	
+
 	public void setClassesDirectory(File classesDirectory) {
 		this.classesDirectory = classesDirectory;
 	}
-	
+
 	public void setCrapThreshold(int crapThreshold) {
 		this.crapThreshold = crapThreshold;
 	}

@@ -31,11 +31,8 @@ public class ComplexityCalculator {
 			if (file.isDirectory()) {
 				result.addAll(calculateComplexitiesFor(file));
 			}
-			if (file.isFile() && file.getName().endsWith(".class")) {
+			if (file.isFile() && file.getName().endsWith(".class")) { //$NON-NLS-1$
 				List<MethodComplexity> methodComplexities = this.complexity.getMethodComplexitiesFor(file);
-//				if (file.getName().startsWith("I")) {
-//					System.out.println(file.getName() + ": " + methodComplexities.size());
-//				}
 				result.addAll(methodComplexities);
 			}
 		}

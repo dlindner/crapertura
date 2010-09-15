@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 public class CrapStatistics {
-	
+
 	private final static double NOT_YET_CALCULATED = -1.00d;
-	
+
 	private final Map<Aspect, StatisticAspect> aspectsMap;
 	private final int crapThreshold;
-	
+
 	protected CrapStatistics(Iterable<StatisticAspect> aspects, int crapThreshold) {
 		super();
 		this.crapThreshold = crapThreshold;
@@ -20,7 +20,7 @@ public class CrapStatistics {
 			this.aspectsMap.put(statisticAspect.getIdentifier(), statisticAspect);
 		}
 	}
-	
+
 	public static CrapStatistics fromMethodData(Iterable<MethodCrapData> data) {
 		List<StatisticAspect> aspects = new ArrayList<CrapStatistics.StatisticAspect>();
 		aspects.add(new MethodCount());
@@ -29,7 +29,7 @@ public class CrapStatistics {
 		aspects.add(new CrapLoad());
 		aspects.add(new Median());
 		aspects.add(new StandardDeviation());
-		
+
 		int crapThreshold = 30;
 		for (MethodCrapData method : data) {
 			crapThreshold = method.getCrapThreshold();
@@ -39,7 +39,7 @@ public class CrapStatistics {
 		}
 		return new CrapStatistics(aspects, crapThreshold);
 	}
-	
+
 	protected enum Aspect {
 		METHOD_COUNT,
 		TOTAL_CRAP,
@@ -48,15 +48,15 @@ public class CrapStatistics {
 		MEDIAN,
 		STANDARD_DEVIATION,
 	}
-	
+
 	protected static interface StatisticAspect {
 		public Aspect getIdentifier();
-		
+
 		public void include(MethodCrapData methodData);
-		
+
 		public Number getResult();
 	}
-	
+
 	protected static abstract class AspectBase implements StatisticAspect {
 		private final Aspect identifier;
 
@@ -64,71 +64,71 @@ public class CrapStatistics {
 			super();
 			this.identifier = identifier;
 		}
-		
+
 		@Override
 		public Aspect getIdentifier() {
 			return this.identifier;
 		}
 	}
-	
+
 	protected static class Median extends AspectBase {
 		private final List<Double> crapValues;
-		
+
 		public Median() {
 			super(Aspect.MEDIAN);
 			this.crapValues = new ArrayList<Double>();
 		}
-		
+
 		@Override
 		public void include(MethodCrapData methodData) {
 			this.crapValues.add(Double.valueOf(methodData.getCrap()));
 		}
-		
+
 		@Override
 		public Number getResult() {
 			org.apache.commons.math.stat.descriptive.rank.Median median = new org.apache.commons.math.stat.descriptive.rank.Median();
-			double[] values = new double[crapValues.size()];
+			double[] values = new double[this.crapValues.size()];
 			for (int i = 0; i < values.length; i++) {
-				values[i] = crapValues.get(i).doubleValue();
+				values[i] = this.crapValues.get(i).doubleValue();
 			}
 			return Double.valueOf(median.evaluate(values));
 		}
 	}
-	
+
 	protected static class StandardDeviation extends AspectBase {
 		private final org.apache.commons.math.stat.descriptive.moment.StandardDeviation calculator;
-		
+
 		public StandardDeviation() {
 			super(Aspect.STANDARD_DEVIATION);
 			this.calculator = new org.apache.commons.math.stat.descriptive.moment.StandardDeviation();
 		}
-		
+
 		@Override
 		public void include(MethodCrapData methodData) {
 			this.calculator.increment(methodData.getCrap());
 		}
-		
+
 		@Override
 		public Number getResult() {
 			return Double.valueOf(this.calculator.getResult());
 		}
 	}
-	
+
 	protected static abstract class IntegerAdditionAspect extends AspectBase {
 		private int result;
-		
+
 		public IntegerAdditionAspect(Aspect identifier) {
 			super(identifier);
 			this.result = 0;
 		}
-		
+
 		@Override
 		public abstract void include(MethodCrapData methodData);
 
 		protected void addToResult(int offset) {
 			this.result += offset;
 		}
-		
+
 		@Override
 		public Number getResult() {
 			return Integer.valueOf(this.result);
@@ -137,19 +137,19 @@ public class CrapStatistics {
 
 	protected static abstract class DoubleAdditionAspect extends AspectBase {
 		private double result;
-		
+
 		public DoubleAdditionAspect(Aspect identifier) {
 			super(identifier);
 			this.result = 0;
 		}
-		
+
 		@Override
 		public abstract void include(MethodCrapData methodData);
 
 		protected void addToResult(double offset) {
 			this.result += offset;
 		}
-		
+
 		@Override
 		public Number getResult() {
 			return Double.valueOf(this.result);
@@ -171,18 +171,18 @@ public class CrapStatistics {
 		public CrapLoad() {
 			super(Aspect.CRAP_LOAD);
 		}
-		
+
 		@Override
 		public void include(MethodCrapData methodData) {
 			addToResult(methodData.getCrapLoad());
 		}
 	}
-	
+
 	protected static class MethodCount extends IntegerAdditionAspect {
 		public MethodCount() {
 			super(Aspect.METHOD_COUNT);
 		}
-		
+
 		@Override
 		public void include(MethodCrapData methodData) {
 			addToResult(1);
@@ -193,7 +193,7 @@ public class CrapStatistics {
 		public CrapMethodCount() {
 			super(Aspect.CRAP_METHOD_COUNT);
 		}
-		
+
 		@Override
 		public void include(MethodCrapData methodData) {
 			if (methodData.getCrapLoad() > 0) {
@@ -201,7 +201,7 @@ public class CrapStatistics {
 			}
 		}
 	}
-	
+
 	protected Number getResultFor(Aspect aspect) {
 		return this.aspectsMap.get(aspect).getResult();
 	}
@@ -211,7 +211,7 @@ public class CrapStatistics {
 	}
 
 	public double getCrap() {
-		return getTotalCrap() / ((double) getMethodCount());
+		return getTotalCrap() / (getMethodCount());
 	}
 
 	public double getMedian() {
@@ -219,7 +219,7 @@ public class CrapStatistics {
 	}
 
 	public double getAverage() {
-		return getTotalCrap() / ((double) getMethodCount());
+		return getTotalCrap() / (getMethodCount());
 	}
 
 	public double getStandardDeviation() {
