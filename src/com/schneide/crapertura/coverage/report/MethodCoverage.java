@@ -18,4 +18,11 @@ public class MethodCoverage {
 	public double getBranchCoverageRate() {
 		return this.branchCoverageRate;
 	}
+
+    public double getCoverage() {
+        if (0.0d == getLineCoverageRate()) {
+            return 0.0d;
+        }
+        return (getBranchCoverageRate() * getLineCoverageRate());
+    }
 }

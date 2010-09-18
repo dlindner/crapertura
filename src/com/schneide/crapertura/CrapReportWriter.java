@@ -2,6 +2,7 @@ package com.schneide.crapertura;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentFactory;
@@ -19,7 +20,7 @@ public class CrapReportWriter {
 		super();
 	}
 
-	public void writeReportTo(File targetFile, Iterable<MethodCrapData> data) throws Exception {
+	public void writeReportTo(File targetFile, Iterable<MethodCrapData> data) throws IOException {
 		OutputFormat outformat = OutputFormat.createPrettyPrint();
 		//outformat.setEncoding(aEncodingScheme);
 		XMLWriter writer = new XMLWriter(new FileOutputStream(targetFile), outformat);

@@ -15,7 +15,7 @@ public class MethodCrapData {
 	public MethodCrapData(MethodComplexity complexity, MethodCoverage coverage, int crapThreshold) {
 		super();
 		this.complexity = complexity;
-		this.coverage = adjustBranchCoverage(coverage.getLineCoverageRate(), coverage.getBranchCoverageRate());
+		this.coverage = coverage.getCoverage();
 		this.crap = calculateCrap(complexity.getComplexity(), this.coverage);
 		this.crapThreshold = crapThreshold;
 		this.crapLoad = calculateCrapLoad(this.crap,
@@ -60,13 +60,6 @@ public class MethodCrapData {
 
 	public int getCrapThreshold() {
 		return this.crapThreshold;
-	}
-
-	protected double adjustBranchCoverage(double lineCoverage, double branchCoverage) {
-		if (0.0d == lineCoverage) {
-			return 0.0d;
-		}
-		return (branchCoverage * lineCoverage);
 	}
 
     public static int calculateCrapLoad(double crap, int complexity, double coverage, double crapThreshold) {

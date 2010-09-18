@@ -11,9 +11,9 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 		CraperturaTask task = new CraperturaTask();
-		task.setCoberturaReportFile(new File("C:/Dokumente und Einstellungen/dsl/Desktop/ramses-center-coverage.xml"));
-		task.setClassesDirectory(new File("C:/Dokumente und Einstellungen/dsl/Desktop/report-classes/report-classes"));
-		task.setTargetFile(new File("C:/Dokumente und Einstellungen/dsl/Desktop/tested_crapreport.xml"));
+		task.setCoberturaReportFile(new File("C:/Dokumente und Einstellungen/User/Desktop/coverage.xml"));
+		task.setClassesDirectory(new File("C:/Dokumente und Einstellungen/User/Desktop/report-classes"));
+		task.setTargetFile(new File("C:/Dokumente und Einstellungen/User/Desktop/target/tested_crapreport.xml"));
 		task.setProject(new Project());
 		task.execute();
 	}
