@@ -1,4 +1,4 @@
-An ant task that reads <a href="http://cobertura.sourceforge.net">cobertura</a> test coverage data and outputs a <a href="http://www.crap4j.org">crap4j</a> metric report.
+An ant task that reads cobertura (http://cobertura.sourceforge.net) test coverage data and outputs a crap4j (http://www.crap4j.org) metric report.
 
 Read more about the motivation and background information at (LINK TO BLOG ENTRY)
 
@@ -33,5 +33,10 @@ Read more about the motivation and background information at (LINK TO BLOG ENTRY
 There are at least two optional parameters provided for advanced users:
 - generateHTMLReport (true/false): If false, will not generate the HTML report, but the crap4j XML file only. Defaults to true.
 - crapThreshold (0..MAX_INTEGER): Adjusts the crap threshold of the analysis to the given value. Defaults to 30. See also http://www.crap4j.org/faq.html
+
+= Building for yourself =
+- The project is developed with Eclipse (3.6). Just import it and run the build.xml ant script.
+- The deployable artifact can be found in the subdirectory "dist".
+- You can also run build.xml with ant from the command line.
 
 Enjoy and share your experience!
