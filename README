@@ -1,0 +1,37 @@
+An ant task that reads <a href="http://cobertura.sourceforge.net">cobertura</a> test coverage data and outputs a <a href="http://www.crap4j.org">crap4j</a> metric report.
+
+Read more about the motivation and background information at (LINK TO BLOG ENTRY)
+
+= Basic usage =
+1. Define the task in your ant script
+2. Use the task, feeding it the cobertura XML report file and your .class files, pointing to an output/target directory
+
+== Details for 1. ==
+- Include this into your ant script and set ${crapertura.home} to your crapertura installation directory
+
+<taskdef name="crapertura" classname="com.schneide.crapertura.ant.CraperturaTask">
+	<classpath>
+		<fileset dir="${crapertura.home}">
+			<include name="**/*.jar" />
+		</fileset>
+	</classpath>
+</taskdef>
+
+== Details for 2. ==
+- Include this into your ant script and set the parameters.
+- ${cobertura.report.file} has to point to the XML report file of cobertura
+- ${crapertura.report.directory} has to point to the output directory for the crap4j-like result report
+- ${classes.directory} has to point to your compiled, but unpackaged class files (.class)
+
+<crapertura
+	coberturaReportFile="${cobertura.report.file}"
+	targetDirectory="${crapertura.report.directory}"
+	classesDirectory="${classes.directory}"
+/>
+
+= Advanced usage =
+There are at least two optional parameters provided for advanced users:
+- generateHTMLReport (true/false): If false, will not generate the HTML report, but the crap4j XML file only. Defaults to true.
+- crapThreshold (0..MAX_INTEGER): Adjusts the crap threshold of the analysis to the given value. Defaults to 30. See also http://www.crap4j.org/faq.html
+
+Enjoy and share your experience!

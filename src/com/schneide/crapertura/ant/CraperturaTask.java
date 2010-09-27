@@ -26,7 +26,7 @@ public class CraperturaTask extends Task {
 
     private static final MethodCoverage NO_COVERAGE = new MethodCoverage(0.0d, 0.0d);
 	private File coberturaReportFile;
-	private File reportTargetFile;
+	private File reportTargetDirectory;
 	private File classesDirectory;
 	private int crapThreshold;
 	private boolean generateHTMLReport;
@@ -40,8 +40,11 @@ public class CraperturaTask extends Task {
     @Override
 	public void execute() throws BuildException {
 		failIfAbsent(this.coberturaReportFile, "coberturaReportFile");
-		failIfAbsent(this.reportTargetFile, "targetFile");
+		failIfAbsent(this.reportTargetDirectory, "targetDirectory");
 		failIfAbsent(this.classesDirectory, "classesDirectory");
+		if (!this.reportTargetDirectory.isDirectory()) {
+		    this.reportTargetDirectory.mkdirs();
+		}
 		try {
 			executeChecked();
 		} catch (Exception e) {
@@ -74,7 +77,7 @@ public class CraperturaTask extends Task {
         public void writeTo(File targetFile) throws IOException {
             CrapReportWriter writer = new CrapReportWriter();
             writer.writeReportTo(
-                    targetFile,
+                    new File(targetFile, "report.xml"),
                     this.crapData);
         }
     }
@@ -97,14 +100,14 @@ public class CraperturaTask extends Task {
         }
 
         @Override
-        public void writeTo(File targetFile) throws IOException {
+        public void writeTo(File targetDirectory) throws IOException {
             CrapProject crapProject = new CrapProject(
                     "TODO projectDir",
                     new ArrayList<String>(),
                     new ArrayList<String>(),
                     new ArrayList<String>(),
                     new ArrayList<String>(),
-                    targetFile.getParentFile().getAbsolutePath());
+                    targetDirectory.getAbsolutePath());
             SystemCrapStats originalReport = new SystemCrapStats(this.crapData,
                     "TODO original report",
                     crapProject,
@@ -145,7 +148,7 @@ public class CraperturaTask extends Task {
             }
 		}
 		for (CrapReporting crapReporting : reporting) {
-            crapReporting.writeTo(this.reportTargetFile);
+            crapReporting.writeTo(this.reportTargetDirectory);
         }
 	}
 
@@ -174,8 +177,8 @@ public class CraperturaTask extends Task {
 		this.coberturaReportFile = coberturaReportFile;
 	}
 
-	public void setTargetFile(File targetFile) {
-		this.reportTargetFile = targetFile;
+	public void setTargetDirectory(File targetDirectory) {
+		this.reportTargetDirectory = targetDirectory;
 	}
 
 	public void setClassesDirectory(File classesDirectory) {

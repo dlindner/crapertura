@@ -31,9 +31,12 @@ public class CrapReportWriter {
     protected Document createReportDocument(Iterable<MethodCrapData> data) {
 		Document document = DocumentFactory.getInstance().createDocument();
 		Element rootElement = document.addElement("crap_result");
+		// TODO: Add real project name
 		rootElement.addElement("project").addText("TODO");
-		rootElement.addElement("project_id").addText("132");
-		rootElement.addElement("timestamp").addText("10/5/08 2:03 PM");
+        // TODO: Add some good looking project ID
+		rootElement.addElement("project_id").addText("TODO");
+        // TODO: Add current date here
+		rootElement.addElement("timestamp").addText("TODO");
 		addClassDirectories(rootElement.addElement("classDirectories"));
 		addTestClassDirectories(rootElement.addElement("testClassDirectories"));
 		addSourceDirectories(rootElement.addElement("sourceDirectories"));
@@ -68,15 +71,15 @@ public class CrapReportWriter {
 	protected void addHistogram(Element histogramElement) {
 	    // TODO: Calculate real histogram
 		HistogramBar[] bars = new HistogramBar[] {
-			new HistogramBar("one", 1987, 28.0d),
-			new HistogramBar("two", 12606, 170.0d),
-			new HistogramBar("four", 1502, 28.0d),
-			new HistogramBar("eight", 500, 28.0d),
-			new HistogramBar("sixteen", 200, 28.0d),
-			new HistogramBar("thirtytwo", 27, 28.0d),
-			new HistogramBar("sixtyfour", 12, 28.0d),
-			new HistogramBar("one28", 2, 28.0d),
-			new HistogramBar("two56", 1, 28.0d),
+			new HistogramBar("one", 0, 0.0d),
+			new HistogramBar("two", 0, 0.0d),
+			new HistogramBar("four", 0, 0.0d),
+			new HistogramBar("eight", 0, 0.0d),
+			new HistogramBar("sixteen", 0, 0.0d),
+			new HistogramBar("thirtytwo", 0, 0.0d),
+			new HistogramBar("sixtyfour", 0, 0.0d),
+			new HistogramBar("one28", 0, 0.0d),
+			new HistogramBar("two56", 0, 0.0d),
 		};
 		for (HistogramBar histogramBar : bars) {
 			histogramBar.appendToElement(histogramElement);
@@ -111,24 +114,28 @@ public class CrapReportWriter {
 		addNumberElement(statsElement, "globalCraploadAverageDiff", statistics.getGlobalCraploadAverageDiff());
 		addNumberElement(statsElement, "globalCrapMethodAverageDiff", statistics.getGlobalCrapMethodAverageDiff());
 		addNumberElement(statsElement, "globalTotalMethodAverageDiff", statistics.getGlobalTotalMethodAverageDiff());
-		statsElement.addElement("shareStatsUrl").addText("http://www.crap4j.org/benchmark/stats/new?stat[project_hash]=1223208041985&amp;stat[project_url]=ci&amp;stat[crap]=0.56&amp;stat[crap_load]=574&amp;stat[crap_methods]=95&amp;stat[total_methods]=16837&amp;stat[ones]=1987&amp;stat[twos]=12606&amp;stat[fours]=1502&amp;stat[eights]=500&amp;stat[sixteens]=200&amp;stat[thirtytwos]=27&amp;stat[sixtyfours]=12&amp;stat[one28s]=2&amp;stat[two56s]=1");
+		statsElement.addElement("shareStatsUrl").addText("http://127.0.0.1/sharingIsDisabled");
 		addHistogram(statsElement.addElement("histogram"));
 	}
 
 	private void addClassDirectories(Element addElement) {
-		addElement.addElement("classDirectory").addText("/home/ci/slavespace/workspace");
+	    // TODO: Add class directories
+		addElement.addElement("classDirectory").addText("");
 	}
 
 	private void addTestClassDirectories(Element addElement) {
-		addElement.addElement("testClassDirectory").addText("/home/ci/slavespace/workspace");
+        // TODO: Add test class directories
+		addElement.addElement("testClassDirectory").addText("");
 	}
 
 	private void addSourceDirectories(Element addElement) {
-		addElement.addElement("sourceDirectory").addText("/home/ci/slavespace/workspace");
+        // TODO: Add source directories
+		addElement.addElement("sourceDirectory").addText("");
 	}
 
 	private void addLibClasspaths(Element addElement) {
-		addElement.addElement("libClasspath").addText("/_generated/ci-reporting/ci-reporting/lib/TimingFramework-1.0.jar");
+        // TODO: Add library classpath directories
+		addElement.addElement("libClasspath").addText("");
 	}
 
 	protected void addMethods(Element rootElement, Iterable<MethodCrapData> data) {
