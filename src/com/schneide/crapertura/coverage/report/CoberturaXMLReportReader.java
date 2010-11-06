@@ -19,6 +19,8 @@ public class CoberturaXMLReportReader {
     public Map<String, MethodCoverage> readXMLReport(File reportFile) throws Exception {
 		Map<String, MethodCoverage> result = new HashMap<String, MethodCoverage>();
 	    SAXReader xmlReader = new SAXReader();
+	    xmlReader.setValidation(false);
+	    xmlReader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 	    Document document = xmlReader.read(reportFile);
 	    Element rootElement = document.getRootElement();
 	    if (!"coverage".equals(rootElement.getName())) {
