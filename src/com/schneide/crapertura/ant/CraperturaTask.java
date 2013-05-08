@@ -130,25 +130,23 @@ public class CraperturaTask extends Task {
         }
 
         public MethodCoverage getCoverageFor(final String methodSignature) {
-            MethodCoverage currentCoverage = NO_COVERAGE;
-            if (this.map.containsKey(methodSignature)) {
-                currentCoverage = this.map.get(methodSignature);
+            if (hasCoverageFor(methodSignature)) {
+                return this.map.get(methodSignature);
             }
-            return currentCoverage;
+            return NO_COVERAGE;
+        }
+
+        public boolean hasCoverageFor(final String methodSignature) {
+            return this.map.containsKey(methodSignature);
         }
     }
 
 	protected void executeChecked() throws Exception {
-		Iterable<CrapReporting> reporting = buildReportings();
-		MethodCoverageProvider coverageProvider = new MethodCoverageProvider(this.coberturaReportFile);
-		for (MethodComplexity methodComplexity : fetchMethodComplexities()) {
-		    MethodCoverage methodCoverage = coverageProvider.getCoverageFor(methodComplexity.getMatchingMethodSignature());
-		    for (CrapReporting crapReporting : reporting) {
-                crapReporting.consider(methodComplexity, methodCoverage);
-            }
-		}
-		for (CrapReporting crapReporting : reporting) {
-            crapReporting.writeTo(this.reportTargetDirectory);
+		final MethodCoverageProvider coverageProvider = new MethodCoverageProvider(this.coberturaReportFile);
+		final Iterable<MethodComplexity> methodComplexities = fetchMethodComplexities();
+		final Iterable<CrapReporting> reporting = new CraperturaEngine().performOn(buildReportings(), coverageProvider, methodComplexities);
+		for (CrapReporting each : reporting) {
+            each.writeTo(this.reportTargetDirectory);
         }
 	}
 

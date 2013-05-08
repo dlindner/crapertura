@@ -3,6 +3,7 @@ package com.schneide.crapertura.complexity;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.crap4j.MethodComplexity;
@@ -26,13 +27,17 @@ public class ComplexityCalculator {
 	}
 
 	public Collection<MethodComplexity> calculateComplexitiesFor(File classesDirectory) throws Exception {
-		List<MethodComplexity> result = new ArrayList<MethodComplexity>();
-		for (File file : classesDirectory.listFiles()) {
-			if (file.isDirectory()) {
-				result.addAll(calculateComplexitiesFor(file));
+		final File[] files = classesDirectory.listFiles();
+		if (null == files) {
+		    return Collections.emptyList();
+		}
+		final List<MethodComplexity> result = new ArrayList<MethodComplexity>();
+		for (File each : files) {
+			if (each.isDirectory()) {
+				result.addAll(calculateComplexitiesFor(each));
 			}
-			if (file.isFile() && file.getName().endsWith(".class")) { //$NON-NLS-1$
-				List<MethodComplexity> methodComplexities = this.complexity.getMethodComplexitiesFor(file);
+			if (each.isFile() && each.getName().endsWith(".class")) { //$NON-NLS-1$
+				List<MethodComplexity> methodComplexities = this.complexity.getMethodComplexitiesFor(each);
 				result.addAll(methodComplexities);
 			}
 		}

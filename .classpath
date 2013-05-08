@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test/unit"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/compile/ant-1.8.1.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/crap4j-1.1.5/asmlib.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/crap4j-1.1.5/org.crap4j-1.1.5.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/commons-math-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="test/lib/hamcrest/hamcrest-all-1.3.jar"/>
+	<classpathentry kind="lib" path="test/lib/junit/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="test/lib/mockito/com.springsource.org.objenesis-1.0.0.jar"/>
+	<classpathentry kind="lib" path="test/lib/mockito/mockito-core-1.9.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
